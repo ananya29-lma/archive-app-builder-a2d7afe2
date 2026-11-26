@@ -1,0 +1,5 @@
+[
+  {"capability":"code (single-page portfolio, components, styles, assets)","source":"github:ananya29-lma/archive-to-app-5e4f0f03","outcome":"migrate","status":"verified","next_action":"none"},
+  {"capability":"schema / records / auth / storage / payments / email / webhooks / schedules / secrets","source":"none detected","outcome":"absent","status":"verified","next_action":"none"},
+  {"capability":"external image and font CDNs (images.higgs.ai, cloudfront, Google Fonts)","source":"summit-hero.tsx, __root.tsx","outcome":"preserve","status":"verified","next_action":"one background video request did not finish loading in the check; images load"}
+]
