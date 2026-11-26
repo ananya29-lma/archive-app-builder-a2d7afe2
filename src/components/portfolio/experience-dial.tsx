@@ -107,12 +107,6 @@ type Geo = { w: number; h: number; cx: number; cy: number; r: number; rp: number
 
 const TICKS = 120;
 
-/** Round dots spaced `gap` apart along an arc, then a long gap hiding the rest of the circle. */
-const dottedArc = (circumference: number, arcLen: number, gap: number) => {
-  const n = Math.max(1, Math.floor(arcLen / gap));
-  return `${Array.from({ length: n }, () => `0.01 ${gap}`).join(" ")} ${circumference}`;
-};
-
 /** Map linear scroll to milestone progress with a short pause on each year. */
 function dwell(raw: number) {
   const i = Math.floor(raw);
@@ -249,58 +243,6 @@ export function Experience() {
 
             {/* Dial */}
             <div ref={dialRef} className="relative h-[38%] shrink-0 md:h-full">
-              {geo ? (
-                <svg
-                  className="pointer-events-none absolute inset-0 overflow-visible"
-                  width={geo.w}
-                  height={geo.h}
-                  aria-hidden="true"
-                >
-                  <defs>
-                    <filter id="xp-ring-blur" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="3.5" />
-                    </filter>
-                  </defs>
-                  <g className="gold-rings">
-                    {Array.from({ length: 18 }, (_, i) => (
-                      <circle
-                        key={i}
-                        cx={geo.cx}
-                        cy={geo.cy}
-                        r={geo.r * (0.55 + i * 0.035)}
-                        fill="none"
-                        stroke="var(--gold)"
-                        strokeOpacity={0.16 + (i % 3) * 0.1}
-                        strokeWidth={1.2 + (i % 4) * 0.5}
-                        strokeLinecap="round"
-                        strokeDasharray={`0.01 ${7 + (i % 3) * 2.5}`}
-                        strokeDashoffset={-i * 2.7}
-                      />
-                    ))}
-                  </g>
-                  {[
-                    { k: 0.98, len: 0.16, dur: "gold-spin-slow" },
-                    { k: 0.78, len: 0.12, dur: "gold-spin-mid" },
-                    { k: 1.12, len: 0.1, dur: "gold-spin-rev" },
-                  ].map((s, j) => {
-                    const r = geo.r * s.k;
-                    const c = 2 * Math.PI * r;
-                    return (
-                      <g key={j} className={s.dur} style={{ transformOrigin: `${geo.cx}px ${geo.cy}px` }}>
-                        {[0, 0.5].map((o) => (
-                          <g key={o}>
-                            <circle cx={geo.cx} cy={geo.cy} r={r} fill="none" stroke="var(--gold)" strokeWidth="10"
-                              strokeLinecap="round" strokeDasharray={dottedArc(c, c * s.len, 24)} strokeDashoffset={-c * o}
-                              filter="url(#xp-ring-blur)" opacity="0.7" />
-                            <circle cx={geo.cx} cy={geo.cy} r={r} fill="none" stroke="var(--gold-bright)" strokeWidth="3.2"
-                              strokeLinecap="round" strokeDasharray={dottedArc(c, c * s.len * 0.6, 12)} strokeDashoffset={-c * (o + s.len * 0.2)} />
-                          </g>
-                        ))}
-                      </g>
-                    );
-                  })}
-                </svg>
-              ) : null}
               {geo ? (
                 <svg
                   className="pointer-events-none absolute inset-0 overflow-visible"
