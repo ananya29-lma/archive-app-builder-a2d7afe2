@@ -251,6 +251,55 @@ export function Experience() {
                   aria-hidden="true"
                 >
                   <defs>
+                    <filter id="xp-ring-blur" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="6" />
+                    </filter>
+                  </defs>
+                  <g className="gold-rings">
+                    {Array.from({ length: 14 }, (_, i) => (
+                      <circle
+                        key={i}
+                        cx={geo.cx}
+                        cy={geo.cy}
+                        r={geo.r * (0.55 + i * 0.045)}
+                        fill="none"
+                        stroke="var(--gold)"
+                        strokeOpacity={0.12 + (i % 3) * 0.08}
+                        strokeWidth="0.8"
+                      />
+                    ))}
+                  </g>
+                  {[
+                    { k: 0.98, len: 0.16, dur: "gold-spin-slow" },
+                    { k: 0.78, len: 0.12, dur: "gold-spin-mid" },
+                    { k: 1.12, len: 0.1, dur: "gold-spin-rev" },
+                  ].map((s, j) => {
+                    const r = geo.r * s.k;
+                    const c = 2 * Math.PI * r;
+                    return (
+                      <g key={j} className={s.dur} style={{ transformOrigin: `${geo.cx}px ${geo.cy}px` }}>
+                        {[0, 0.5].map((o) => (
+                          <g key={o}>
+                            <circle cx={geo.cx} cy={geo.cy} r={r} fill="none" stroke="var(--gold)" strokeWidth="10"
+                              strokeLinecap="round" strokeDasharray={`${c * s.len} ${c}`} strokeDashoffset={-c * o}
+                              filter="url(#xp-ring-blur)" opacity="0.7" />
+                            <circle cx={geo.cx} cy={geo.cy} r={r} fill="none" stroke="var(--gold-bright)" strokeWidth="2"
+                              strokeLinecap="round" strokeDasharray={`${c * s.len * 0.6} ${c}`} strokeDashoffset={-c * (o + s.len * 0.2)} />
+                          </g>
+                        ))}
+                      </g>
+                    );
+                  })}
+                </svg>
+              ) : null}
+              {geo ? (
+                <svg
+                  className="pointer-events-none absolute inset-0 overflow-visible"
+                  width={geo.w}
+                  height={geo.h}
+                  aria-hidden="true"
+                >
+                  <defs>
                     <linearGradient id="xp-glow" gradientUnits="userSpaceOnUse" x1="0" y1={ay1} x2="0" y2={ay2}>
                       <stop offset="0" style={{ stopColor: "var(--highlight)", stopOpacity: 0 }} />
                       <stop
