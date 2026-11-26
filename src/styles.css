@@ -514,6 +514,39 @@
   box-shadow: 0 -48px 90px oklch(0 0 0 / 40%);
 }
 
+/* Contact slides up over the pinned experience dial instead of stacking after it. */
+.contact-overlap {
+  position: relative;
+  z-index: 20;
+  margin-top: -42svh;
+  background-color: var(--background);
+}
+/* Fade the dial out under the panel so its top edge is not a hard cut. */
+.contact-overlap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30svh;
+  height: 30svh;
+  background: linear-gradient(to bottom, transparent, var(--background));
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .contact-overlap {
+    margin-top: -22svh;
+  }
+  .contact-overlap::before {
+    top: -18svh;
+    height: 18svh;
+  }
+}
+/* Fade the glow panel in from its own top edge so it never shows a hard line. */
+.contact-glow {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 55%);
+  mask-image: linear-gradient(to bottom, transparent, #000 55%);
+}
+
 .hx-stage {
   position: absolute;
   left: 50%;

@@ -405,9 +405,9 @@ export function About() {
 
 export function Contact() {
   return (
-    <section id="contact" className="relative overflow-hidden py-32">
+    <section id="contact" className="contact-overlap relative py-32">
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-96 opacity-40"
+        className="contact-glow pointer-events-none absolute inset-x-0 top-0 h-96 opacity-40"
         style={{ background: "var(--gradient-glow)" }}
       />
       <div className="relative mx-auto max-w-3xl px-6 text-center">
